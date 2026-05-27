@@ -1306,7 +1306,7 @@
     const N          = ITEMS.length;
     const STEP       = 360 / N;
     const RADIUS     = window.innerWidth <= 768 ? 270 : 580;
-    const AUTO_SPEED = 0.016;
+    const AUTO_SPEED = 0.019;
 
     let rot      = -240;
     let velocity = 0;
@@ -1413,18 +1413,8 @@
       // CTA element
       var cta = document.createElement('div');
       cta.className = 'srv-cta';
-      var txt = document.createTextNode('Descobrir ');
-      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('width', '11'); svg.setAttribute('height', '11');
-      svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
-      svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2.5');
-      var ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      ln.setAttribute('x1', '5'); ln.setAttribute('y1', '12');
-      ln.setAttribute('x2', '19'); ln.setAttribute('y2', '12');
-      var poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-      poly.setAttribute('points', '12 5 19 12 12 19');
-      svg.appendChild(ln); svg.appendChild(poly);
-      cta.appendChild(txt); cta.appendChild(svg);
+      var txt = document.createTextNode('Vem experimentar');
+      cta.appendChild(txt);
       card.appendChild(cta);
 
       // 3D tilt — per-card local tracking
