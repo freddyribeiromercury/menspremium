@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Men's Premium — Barbearia e Imagem Pessoal. Grupo premium de barbearias no concelho de Gondomar, Porto. Cinco unidades. Cortes, barba e estética masculina.">
+  <title>Men's Premium — Barbearia e Imagem Pessoal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --black:       #080808;
+      --black-soft:  #0f0f0f;
+      --black-card:  #131313;
+      --black-edge:  #1c1c1c;
+      --gold:        #C8922A;
+      --gold-light:  #E0A730;
+      --gold-dim:    rgba(200,146,42,.12);
+      --gold-line:   rgba(200,146,42,.35);
+      --white:       #FFFFFF;
+      --grey:        #777777;
+      --grey-light:  #AAAAAA;
+      --ff-display:  'Bebas Neue', sans-serif;
+      --ff-body:     'Montserrat', sans-serif;
+      --ease:        cubic-bezier(.25,.46,.45,.94);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--ff-body); overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; background: none; border: none; }
+
+    /* ─── UTILITIES ──────────────────────────────────────── */
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .38em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); flex-shrink: 0; }
+
+    .display {
+      font-family: var(--ff-display);
+      font-size: clamp(52px,6.5vw,88px);
+      line-height: .92; letter-spacing: .02em; text-transform: uppercase;
+    }
+    .display .ghost {
+      -webkit-text-stroke: 1px rgba(255,255,255,.18);
+      color: transparent;
+    }
+    .display .accent { color: var(--gold); }
+
+    .rule { width: 52px; height: 2px; background: var(--gold); margin: 18px 0; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--ff-body); font-size: 12px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      padding: 15px 34px; transition: all .28s var(--ease);
+      clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+    }
+    .btn-gold { background: var(--gold); color: var(--black); border: 2px solid var(--gold); }
+    .btn-gold:hover { background: transparent; color: var(--gold); }
+    .btn-wire { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.28); clip-path: none; }
+    .btn-wire:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-dark { background: var(--black); color: var(--gold); border: 2px solid var(--black); }
+    .btn-dark:hover { background: transparent; color: var(--black); }
+
+    /* reveal */
+    .r { opacity: 0; transform: translateY(36px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .r.on { opacity: 1; transform: none; }
+    .r[data-d="1"] { transition-delay: .1s; }
+    .r[data-d="2"] { transition-delay: .2s; }
+    .r[data-d="3"] { transition-delay: .3s; }
+    .r[data-d="4"] { transition-delay: .4s; }
+    .r[data-d="5"] { transition-delay: .5s; }
+
+    /* ─── NAVBAR ─────────────────────────────────────────── */
+    #nav {
+      position: fixed; inset: 0 0 auto; z-index: 900;
+      height: 72px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .35s, box-shadow .35s;
+    }
+    #nav.stuck {
+      background: rgba(8,8,8,.96);
+      box-shadow: 0 1px 0 rgba(200,146,42,.18);
+      backdrop-filter: blur(14px);
+    }
+    .nav-logo img { height: 28px; width: auto; display: block; mix-blend-mode: screen; }
+    .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+    .nav-links a {
+      font-size: 11.5px; font-weight: 600; letter-spacing: .16em;
+      text-transform: uppercase; color: rgba(255,255,255,.68);
+      position: relative; transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -4px;
+      width: 0; height: 1px; background: var(--gold); transition: width .3s var(--ease);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--gold); color: var(--black) !important;
+      padding: 9px 20px; font-weight: 700 !important;
+      clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { opacity: .85; color: var(--black) !important; }
+    .ham { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .ham span { display: block; width: 23px; height: 2px; background: var(--white); transition: all .3s; }
+
+    /* ─── MOBILE OVERLAY ─────────────────────────────────── */
+    .mob-menu {
+      display: none; position: fixed; inset: 0; z-index: 800;
+      background: rgba(8,8,8,.98); flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu a {
+      font-family: var(--ff-display); font-size: 44px;
+      color: rgba(255,255,255,.82); letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .mob-menu a:hover { color: var(--gold); }
+    .mob-close {
+      position: absolute; top: 24px; right: 36px;
+      color: var(--white); font-size: 34px; line-height: 1;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    #hero {
+      position: relative; min-height: 100svh;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; overflow: hidden;
+    }
+    .hero-vid {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      opacity: 0; transition: opacity 1.4s ease;
+    }
+    .hero-vid.ready { opacity: 1; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(110deg,
+        rgba(8,8,8,.95) 0%,
+        rgba(8,8,8,.82) 38%,
+        rgba(8,8,8,.48) 66%,
+        rgba(8,8,8,.22) 100%);
+    }
+    .hero-inner {
+      position: relative; z-index: 2; width: 100%;
+      padding: 130px 40px 90px; max-width: 1300px; margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+      opacity: 0; animation: fup .8s var(--ease) .15s forwards;
+    }
+    .hero-eyebrow span {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .hero-eyebrow::before { content: ''; width: 38px; height: 1px; background: var(--gold); }
+    .hero-h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(78px, 12vw, 168px);
+      line-height: .87; letter-spacing: .01em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 10px;
+      opacity: 0; animation: fup .85s var(--ease) .35s forwards;
+    }
+    .hero-h1 em { font-style: normal; color: var(--gold); }
+    .hero-h1 .ghost {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,.2);
+      color: transparent;
+    }
+    .hero-sub {
+      font-size: 11.5px; letter-spacing: .38em; text-transform: uppercase;
+      color: rgba(255,255,255,.42); margin-bottom: 50px;
+      opacity: 0; animation: fup .8s var(--ease) .55s forwards;
+    }
+    .hero-btns {
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+      opacity: 0; animation: fup .8s var(--ease) .7s forwards;
+    }
+    .hero-badge {
+      position: absolute; bottom: 56px; right: 56px; z-index: 2;
+      width: 118px; height: 118px; border-radius: 50%;
+      border: 1px solid var(--gold-line);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      opacity: 0; animation: fin .9s var(--ease) 1.1s forwards;
+    }
+    .hero-badge::before {
+      content: ''; position: absolute; inset: 7px;
+      border-radius: 50%; border: 1px solid rgba(200,146,42,.18);
+    }
+    .hero-badge-yr { font-family: var(--ff-display); font-size: 38px; color: var(--gold); line-height: 1; }
+    .hero-badge-lbl { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.42); margin-top: 2px; }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fin 1s var(--ease) 1.3s forwards;
+    }
+    .hero-scroll span { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+    .scroll-bar { width: 1px; height: 46px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2.2s ease infinite; }
+
+    @keyframes fup  { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: none; } }
+    @keyframes fin  { from { opacity:0; } to { opacity:1; } }
+    @keyframes pulse { 0%,100%{ opacity:1; transform: scaleY(1); } 50%{ opacity:.35; transform: scaleY(.55); } }
+
+    /* ─── TICKER ─────────────────────────────────────────── */
+    .ticker { background: var(--gold); padding: 13px 0; overflow: hidden; }
+    .ticker-rail {
+      display: flex; gap: 0; white-space: nowrap;
+      animation: tick 22s linear infinite;
+    }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: 18px;
+      padding-right: 36px; flex-shrink: 0;
+      font-family: var(--ff-display); font-size: 15px;
+      letter-spacing: .1em; color: var(--black);
+    }
+    .ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--black); flex-shrink: 0; }
+    @keyframes tick { from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+
+    /* ─── STATS ──────────────────────────────────────────── */
+    #stats { background: var(--black-soft); border-bottom: 1px solid var(--black-edge); }
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat {
+      padding: 52px 44px; border-right: 1px solid var(--black-edge);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: var(--ff-display); font-size: 68px; line-height: 1;
+      color: var(--gold); display: flex; align-items: baseline; gap: 3px;
+    }
+    .stat-n sup { font-size: 34px; }
+    .stat-l { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--grey); margin-top: 6px; }
+
+    /* ─── SERVICES ───────────────────────────────────────── */
+    #services { padding: 128px 0; background: var(--black); }
+    .srv-head {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: end; margin-bottom: 72px;
+    }
+    .srv-head p { font-size: 14px; line-height: 1.88; color: rgba(255,255,255,.52); max-width: 430px; }
+    .srv-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 2px; background: var(--black-edge);
+    }
+    .srv-card {
+      background: var(--black-card); padding: 50px 42px;
+      position: relative; overflow: hidden;
+      transition: background .28s;
+    }
+    .srv-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width .4s var(--ease);
+    }
+    .srv-card:hover { background: #161616; }
+    .srv-card:hover::after { width: 100%; }
+    .srv-num {
+      position: absolute; top: 18px; right: 22px;
+      font-family: var(--ff-display); font-size: 80px; line-height: 1;
+      color: rgba(255,255,255,.025); pointer-events: none;
+      transition: color .28s;
+    }
+    .srv-card:hover .srv-num { color: rgba(200,146,42,.055); }
+    .srv-icon { width: 44px; height: 44px; color: var(--gold); margin-bottom: 28px; }
+    .srv-icon svg { width: 100%; height: 100%; }
+    .srv-name { font-family: var(--ff-display); font-size: 29px; letter-spacing: .04em; margin-bottom: 10px; }
+    .srv-desc { font-size: 13px; line-height: 1.78; color: rgba(255,255,255,.52); }
+
+    /* ─── PORTFOLIO ──────────────────────────────────────── */
+    #portfolio { padding: 128px 0; background: var(--black-soft); }
+    .port-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 52px;
+    }
+    /* ── Circular Gallery ── */
+    .circ-wrap {
+      width: 100%; height: 560px;
+      position: relative; overflow: hidden;
+      perspective: 2000px;
+      cursor: grab; user-select: none; -webkit-user-select: none;
+    }
+    .circ-wrap:active { cursor: grabbing; }
+    .circ-wrap::before, .circ-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      width: 200px; z-index: 10; pointer-events: none;
+    }
+    .circ-wrap::before { left: 0; background: linear-gradient(to right, var(--black-soft), transparent); }
+    .circ-wrap::after  { right: 0; background: linear-gradient(to left,  var(--black-soft), transparent); }
+    .circ-scene {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d; will-change: transform;
+    }
+    .circ-card {
+      position: absolute; width: 280px; height: 370px;
+      left: 50%; top: 50%; margin-left: -140px; margin-top: -185px;
+      border-radius: 6px; overflow: hidden;
+      border: 1px solid rgba(200,146,42,.15);
+      transition: border-color .3s, box-shadow .3s;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    }
+    .circ-card:hover { border-color: rgba(200,146,42,.5); box-shadow: 0 0 30px rgba(200,146,42,.12); }
+    .circ-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .circ-card-info {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 20px;
+      background: linear-gradient(to top, rgba(8,8,8,.92) 0%, transparent 100%);
+    }
+    .circ-card-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .circ-card-label { font-family: var(--ff-display); font-size: 22px; letter-spacing: .04em; color: var(--white); }
+    .circ-hint {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 7px; z-index: 10; pointer-events: none;
+      font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      animation: hintOut 1s ease 4s forwards;
+    }
+    @keyframes hintOut { to { opacity: 0; } }
+
+    /* ─── ABOUT ──────────────────────────────────────────── */
+    #about { padding: 128px 0; background: var(--black); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; margin-bottom: 104px; }
+    .about-body { font-size: 14.5px; line-height: 1.88; color: rgba(255,255,255,.56); margin-bottom: 18px; }
+    .about-feats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 38px; }
+    .about-feat { display: flex; align-items: flex-start; gap: 11px; }
+    .feat-check { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .feat-text { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.56); }
+    .feat-text strong { color: var(--white); display: block; font-size: 13.5px; margin-bottom: 1px; }
+    .about-img-wrap { position: relative; }
+    .about-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+    .about-badge {
+      position: absolute; bottom: -22px; left: -22px;
+      width: 148px; height: 148px;
+      background: var(--gold-dim); border: 1px solid var(--gold-line);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 16px;
+    }
+    .about-badge-n { font-family: var(--ff-display); font-size: 54px; color: var(--gold); line-height: 1; }
+    .about-badge-l { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.48); margin-top: 4px; line-height: 1.5; }
+
+    /* Team */
+    .team-hd { text-align: center; margin-bottom: 56px; }
+    .team-hd .eyebrow { justify-content: center; }
+    .team-hd .rule { margin: 16px auto; }
+    .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
+    .team-card { position: relative; overflow: hidden; cursor: pointer; }
+    .team-card img {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      transition: transform .5s var(--ease), filter .5s;
+      filter: grayscale(15%);
+    }
+    .team-card:hover img { transform: scale(1.05); filter: grayscale(0%); }
+    .team-info {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 22px;
+      background: linear-gradient(to top, rgba(8,8,8,.95) 0%, transparent 100%);
+    }
+    .team-role { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .team-name { font-family: var(--ff-display); font-size: 23px; letter-spacing: .04em; line-height: 1.1; }
+    .team-unit { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 3px; letter-spacing: .04em; }
+
+    /* ─── LOCATIONS ──────────────────────────────────────── */
+    #locations { padding: 128px 0; background: var(--black-soft); }
+    .loc-hd { text-align: center; margin-bottom: 66px; }
+    .loc-hd .eyebrow { justify-content: center; }
+    .loc-hd .rule { margin: 16px auto; }
+    .loc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+    .loc-card {
+      background: var(--black-card); padding: 44px 36px;
+      border: 1px solid transparent; transition: border-color .28s; position: relative;
+    }
+    .loc-card:hover { border-color: var(--gold-line); }
+    .loc-card.featured { border-color: var(--gold-line); }
+    .loc-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--gold); color: var(--black);
+      font-size: 9px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; padding: 4px 10px;
+    }
+    .loc-pin { color: var(--gold); margin-bottom: 18px; }
+    .loc-name { font-family: var(--ff-display); font-size: 27px; letter-spacing: .04em; margin-bottom: 6px; }
+    .loc-addr { font-size: 13px; color: var(--grey); margin-bottom: 22px; line-height: 1.65; }
+    .loc-hrs { border-top: 1px solid var(--black-edge); padding-top: 18px; }
+    .loc-hrs-ttl { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .hrs-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
+    .hrs-day { color: rgba(255,255,255,.32); }
+    .hrs-time { color: rgba(255,255,255,.68); font-weight: 500; }
+    .hrs-closed { color: rgba(255,70,70,.55); }
+    .loc-tel {
+      margin-top: 18px; display: flex; align-items: center; gap: 8px;
+      font-size: 13.5px; font-weight: 600; transition: color .2s;
+    }
+    .loc-tel svg { color: var(--gold); flex-shrink: 0; }
+    .loc-tel:hover { color: var(--gold); }
+
+    /* ─── TESTIMONIALS ───────────────────────────────────── */
+    #testimonials { padding: 128px 0; background: var(--black); overflow: hidden; }
+    .testi-hd { text-align: center; margin-bottom: 66px; }
+    .testi-hd .eyebrow { justify-content: center; }
+    .testi-hd .rule { margin: 16px auto; }
+    .testi-track-wrap { position: relative; }
+    .testi-track {
+      display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none;
+      padding: 0 40px 16px; -ms-overflow-style: none;
+    }
+    .testi-track::-webkit-scrollbar { display: none; }
+    .testi-card {
+      flex-shrink: 0; width: 400px;
+      background: var(--black-card); border: 1px solid var(--black-edge); padding: 44px 36px;
+    }
+    .testi-q { font-size: 58px; line-height: .65; font-family: Georgia, serif; color: var(--gold); opacity: .38; margin-bottom: 18px; }
+    .testi-stars { display: flex; gap: 3px; color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+    .testi-text { font-size: 13.5px; line-height: 1.88; color: rgba(255,255,255,.66); margin-bottom: 28px; }
+    .testi-author { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.32); }
+    .testi-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 36px; }
+    .testi-nav button {
+      width: 44px; height: 44px; border: 1px solid var(--black-edge);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); transition: all .2s;
+    }
+    .testi-nav button:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── CTA BAND ───────────────────────────────────────── */
+    #cta {
+      padding: 118px 0; background: var(--gold);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: "MEN'S PREMIUM";
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-family: var(--ff-display); font-size: 190px; letter-spacing: .05em;
+      color: rgba(0,0,0,.055); white-space: nowrap; pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: .38em; text-transform: uppercase; color: rgba(0,0,0,.45); margin-bottom: 18px; }
+    .cta-title {
+      font-family: var(--ff-display);
+      font-size: clamp(54px,7.5vw,100px);
+      line-height: .9; color: var(--black); margin-bottom: 42px;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    #footer { background: #040404; padding: 76px 0 36px; border-top: 1px solid var(--black-edge); }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 56px; margin-bottom: 56px; }
+    .foot-logo img { height: 46px; width: auto; margin-bottom: 18px; }
+    .foot-tag { font-size: 13px; line-height: 1.82; color: rgba(255,255,255,.36); margin-bottom: 26px; }
+    .foot-social { display: flex; gap: 10px; }
+    .soc-link {
+      width: 40px; height: 40px; border: 1px solid var(--black-edge);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.38); transition: all .2s;
+    }
+    .soc-link:hover { border-color: var(--gold); color: var(--gold); }
+    .foot-col-ttl { font-size: 10.5px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--white); margin-bottom: 22px; }
+    .foot-nav { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .foot-nav a { font-size: 13px; color: rgba(255,255,255,.38); transition: color .2s; }
+    .foot-nav a:hover { color: var(--gold); }
+    .foot-contact-row { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: rgba(255,255,255,.38); margin-bottom: 11px; line-height: 1.5; }
+    .foot-contact-row svg { color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+    .foot-bottom { border-top: 1px solid var(--black-edge); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+    .foot-copy { font-size: 11.5px; color: rgba(255,255,255,.22); letter-spacing: .06em; }
+    .foot-rule { width: 52px; height: 1px; background: var(--gold); }
+
+    /* ─── WHATSAPP ────────────────────────────────────────── */
+    .wa-btn {
+      position: fixed; bottom: 30px; right: 30px; z-index: 888;
+      width: 56px; height: 56px; border-radius: 50%; background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 22px rgba(37,211,102,.42);
+      transition: transform .22s var(--ease), box-shadow .22s;
+    }
+    .wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,.52); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .srv-grid { grid-template-columns: repeat(2,1fr); }
+      .srv-head { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 60px; }
+      .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .loc-grid { grid-template-columns: repeat(2,1fr); }
+      .team-grid { grid-template-columns: repeat(2,1fr); }
+      .circ-wrap { height: 480px; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 22px; }
+      #nav { padding: 0 22px; }
+      .nav-links { display: none; }
+      .ham { display: flex; }
+      .hero-badge { display: none; }
+      .hero-inner { padding: 110px 22px 80px; }
+      .display { font-size: clamp(44px,10vw,72px); }
+      .loc-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .srv-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .circ-wrap { height: 400px; }
+      .circ-card { width: 220px; height: 290px; margin-left: -110px; margin-top: -145px; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAVBAR ═══════════════════ -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo"><img src="Logo_crop.jpg" alt="Men's Premium"></a>
+  <ul class="nav-links">
+    <li><a href="#services">Serviços</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#about">Sobre Nós</a></li>
+    <li><a href="#locations">Unidades</a></li>
+    <li><a href="#testimonials">Avaliações</a></li>
+    <li><a href="https://linktr.ee/menspremium" target="_blank" class="nav-cta">Agendar</a></li>
+  </ul>
+  <button class="ham" id="hamBtn" aria-label="Menu" onclick="toggleMob()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="toggleMob()">×</button>
+  <a href="#services"      onclick="toggleMob()">Serviços</a>
+  <a href="#portfolio"     onclick="toggleMob()">Portfólio</a>
+  <a href="#about"         onclick="toggleMob()">Sobre Nós</a>
+  <a href="#locations"     onclick="toggleMob()">Unidades</a>
+  <a href="#testimonials"  onclick="toggleMob()">Avaliações</a>
+  <a href="https://linktr.ee/menspremium" target="_blank">Agendar Agora</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-bg">
+    <video class="hero-vid" id="heroVid" autoplay muted loop playsinline preload="auto">
+      <source src="Barbearia.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span>Barbearia &amp; Imagem Pessoal</span></div>
+    <h1 class="hero-h1">
+      O Corte<br>
+      <em>Perfeito</em><br>
+      <span class="ghost">Começa Aqui</span>
+    </h1>
+    <p class="hero-sub">Gondomar · Porto · Desde 2019</p>
+    <div class="hero-btns">
+      <a href="https://linktr.ee/menspremium" target="_blank" class="btn btn-gold">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Agendar Agora
+      </a>
+      <a href="#portfolio" class="btn btn-wire">Ver Portfólio</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="hero-badge-yr">2019</div>
+    <div class="hero-badge-lbl">Fundada<br>em</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ TICKER ═══════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-rail">
+    <div class="ticker-item">MEN'S PREMIUM <span class="ticker-dot"></span></div>
+    <div class="ticker-item">BARBEARIA PREMIUM <span class="ticker-dot"></span></div>
+    <div class="ticker-item">IMAGEM PESSOAL <span class="ticker-dot"></span></div>
+    <div class="ticker-item">GONDOMAR · PORTO <span class="ticker-dot"></span></div>
+    <div class="ticker-item">DESDE 2019 <span class="ticker-dot"></span></div>
+    <div class="ticker-item">5 UNIDADES <span class="ticker-dot"></span></div>
+    <div class="ticker-item">MEN'S PREMIUM <span class="ticker-dot"></span></div>
+    <div class="ticker-item">BARBEARIA PREMIUM <span class="ticker-dot"></span></div>
+    <div class="ticker-item">IMAGEM PESSOAL <span class="ticker-dot"></span></div>
+    <div class="ticker-item">GONDOMAR · PORTO <span class="ticker-dot"></span></div>
+    <div class="ticker-item">DESDE 2019 <span class="ticker-dot"></span></div>
+    <div class="ticker-item">5 UNIDADES <span class="ticker-dot"></span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<section id="stats">
+  <div class="stats-row">
+    <div class="stat r">
+      <div class="stat-n"><span class="ctr" data-t="7">0</span><sup>+</sup></div>
+      <div class="stat-l">Anos de Experiência</div>
+    </div>
+    <div class="stat r" data-d="1">
+      <div class="stat-n"><span class="ctr" data-t="5">0</span></div>
+      <div class="stat-l">Unidades em Gondomar</div>
+    </div>
+    <div class="stat r" data-d="2">
+      <div class="stat-n"><span class="ctr" data-t="200">0</span><sup>+</sup></div>
+      <div class="stat-l">Avaliações Google</div>
+    </div>
+    <div class="stat r" data-d="3">
+      <div class="stat-n"><span class="ctr" data-t="2082">0</span><sup>+</sup></div>
+      <div class="stat-l">Seguidores Facebook</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="srv-head r">
+      <div>
+        <div class="eyebrow">O Que Fazemos</div>
+        <div class="rule"></div>
+        <h2 class="display">Serviços<br><span class="accent">Premium</span></h2>
+      </div>
+      <p>Muito mais que um simples corte de cabelo — uma experiência completa de bem-estar e cuidado masculino, com profissionais altamente qualificados em cada detalhe.</p>
+    </div>
+    <div class="srv-grid">
+
+      <div class="srv-card r">
+        <span class="srv-num">01</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M6 9l6-6 6 6"/><path d="M6 12l6-6 6 6"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><line x1="7" y1="17" x2="17" y2="17"/>
+          </svg>
+        </div>
+        <div class="srv-name">Corte de Cabelo</div>
+        <p class="srv-desc">Clássico, moderno ou personalizado. Fade, degradê e acabamentos impecáveis com atenção total ao detalhe e ao estilo de cada cliente.</p>
+      </div>
+
+      <div class="srv-card r" data-d="1">
+        <span class="srv-num">02</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="srv-name">Barba</div>
+        <p class="srv-desc">Aparo, modelagem e design de barba premium. Acabamento perfeito com toalha quente, produtos de qualidade e técnica apurada.</p>
+      </div>
+
+      <div class="srv-card r" data-d="2">
+        <span class="srv-num">03</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="srv-name">Barba à Navalha</div>
+        <p class="srv-desc">A experiência clássica do barbeiro de luxo. Navalha afiada, toalha quente e cuidados pós-barba para uma pele impecável.</p>
+      </div>
+
+      <div class="srv-card r" data-d="1">
+        <span class="srv-num">04</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="srv-name">Corte Infantil</div>
+        <p class="srv-desc">Cortes pensados para os mais pequenos, num ambiente descontraído, acolhedor e familiar.</p>
+      </div>
+
+      <div class="srv-card r" data-d="2">
+        <span class="srv-num">05</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="srv-name">Estética Masculina</div>
+        <p class="srv-desc">Depilação masculina, cuidados faciais e tratamentos de pele especializados pelo Men's Premium Estética.</p>
+      </div>
+
+      <div class="srv-card r" data-d="3">
+        <span class="srv-num">06</span>
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="srv-name">Osteopatia</div>
+        <p class="srv-desc">Bem-estar total para o homem moderno. Serviços complementares de osteopatia disponíveis nas nossas unidades.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PORTFOLIO ═══════════════════ -->
+<section id="portfolio">
+  <div class="container">
+    <div class="port-head r">
+      <div>
+        <div class="eyebrow">O Nosso Trabalho</div>
+        <div class="rule"></div>
+        <h2 class="display">Portfólio</h2>
+      </div>
+      <a href="https://www.instagram.com/mens__premium/" target="_blank" class="btn btn-wire" rel="noopener">
+        Ver no Instagram ↗
+      </a>
+    </div>
+  </div>
+  <div class="circ-wrap" id="circWrap">
+    <div class="circ-scene" id="circScene"></div>
+    <div class="circ-hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Arraste para rodar
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="r">
+        <div class="eyebrow" style="margin-bottom:18px">Sobre Nós</div>
+        <h2 class="display">Mais do que<br>uma <span class="accent">Barbearia</span></h2>
+        <div class="rule"></div>
+        <p class="about-body">Fundada em 2019, a Men's Premium é um grupo de barbearias premium destinado ao homem moderno, localizado no concelho de Gondomar, Porto. Crescemos para nos tornarmos um dos grupos de referência da região, com cinco unidades em funcionamento.</p>
+        <p class="about-body">O nosso conceito vai além do simples corte de cabelo — é uma experiência de bem-estar e cuidado masculino, com instalações modernas, equipa jovem e altamente qualificada, e uma atmosfera de relaxamento e sofisticação.</p>
+        <div class="about-feats">
+          <div class="about-feat">
+            <div class="feat-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Equipa Jovem e Qualificada</strong>Profissionais formados e comprometidos</div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Instalações Premium</strong>Ambiente sofisticado e acolhedor</div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>5 Unidades</strong>Gondomar e área metropolitana</div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Academia de Formação</strong>Men's Premium Academia</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-img-wrap r" data-d="2">
+        <img src="Servico/475757929_2440927816255793_273036272784540074_n.jpg" alt="Ferramentas Men's Premium" class="about-img">
+        <div class="about-badge">
+          <div class="about-badge-n">5</div>
+          <div class="about-badge-l">Unidades<br>Gondomar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="r">
+      <div class="team-hd">
+        <div class="eyebrow">A Nossa Equipa</div>
+        <div class="rule"></div>
+        <h2 class="display">Os Nossos <span class="accent">Especialistas</span></h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="Quem%20somos/494528421_1239805738140132_8064944019577348083_n.jpg" alt="João Santos">
+          <div class="team-info">
+            <div class="team-role">Subgerente</div>
+            <div class="team-name">João Santos</div>
+            <div class="team-unit">Barbearia Fânzeres</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <img src="Quem%20somos/493275150_1240269948093711_3952709594403707158_n.jpg" alt="João Sousa">
+          <div class="team-info">
+            <div class="team-role">Subgerente</div>
+            <div class="team-name">João Sousa</div>
+            <div class="team-unit">São Pedro da Cova</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <img src="Quem%20somos/494263641_1239816331472406_6279932254333783345_n.jpg" alt="Tiago Simão">
+          <div class="team-info">
+            <div class="team-role">Subgerente</div>
+            <div class="team-name">Tiago Simão</div>
+            <div class="team-unit">Barbearia Rio Tinto</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <img src="Quem%20somos/494420396_1240434434743929_2177408074514754968_n.jpg" alt="Filipe Rodrigues">
+          <div class="team-info">
+            <div class="team-role">Subgerente</div>
+            <div class="team-name">Filipe Rodrigues</div>
+            <div class="team-unit">Barbearia Gandra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LOCATIONS ═══════════════════ -->
+<section id="locations">
+  <div class="container">
+    <div class="loc-hd r">
+      <div class="eyebrow">Onde Estamos</div>
+      <div class="rule"></div>
+      <h2 class="display">As Nossas <span class="accent">Unidades</span></h2>
+    </div>
+    <div class="loc-grid">
+
+      <div class="loc-card featured r">
+        <span class="loc-badge">Principal</span>
+        <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="loc-name">Fânzeres</div>
+        <div class="loc-addr">Av. Gen. Humberto Delgado 1621<br>4510-570 Fânzeres, Gondomar</div>
+        <div class="loc-hrs">
+          <div class="loc-hrs-ttl">Horário</div>
+          <div class="hrs-row"><span class="hrs-day">Segunda</span><span class="hrs-closed">Encerrado</span></div>
+          <div class="hrs-row"><span class="hrs-day">Terça – Quinta</span><span class="hrs-time">10:00 – 19:30</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sexta</span><span class="hrs-time">10:00 – 20:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sábado</span><span class="hrs-time">09:00 – 17:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Domingo</span><span class="hrs-closed">Encerrado</span></div>
+        </div>
+        <a href="tel:+351915830299" class="loc-tel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 915 830 299
+        </a>
+      </div>
+
+      <div class="loc-card r" data-d="1">
+        <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="loc-name">Rio Tinto</div>
+        <div class="loc-addr">Tv. Fernão de Magalhães<br>4435-481 Rio Tinto, Gondomar</div>
+        <div class="loc-hrs">
+          <div class="loc-hrs-ttl">Horário</div>
+          <div class="hrs-row"><span class="hrs-day">Segunda</span><span class="hrs-closed">Encerrado</span></div>
+          <div class="hrs-row"><span class="hrs-day">Terça – Quinta</span><span class="hrs-time">10:00 – 19:30</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sexta</span><span class="hrs-time">10:00 – 20:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sábado</span><span class="hrs-time">09:00 – 17:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Domingo</span><span class="hrs-closed">Encerrado</span></div>
+        </div>
+        <a href="tel:+351220177657" class="loc-tel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 22 017 7657
+        </a>
+      </div>
+
+      <div class="loc-card r" data-d="2">
+        <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="loc-name">Gondomar</div>
+        <div class="loc-addr">R. 25 de Abril 335<br>Gondomar</div>
+        <div class="loc-hrs">
+          <div class="loc-hrs-ttl">Horário</div>
+          <div class="hrs-row"><span class="hrs-day">Segunda</span><span class="hrs-closed">Encerrado</span></div>
+          <div class="hrs-row"><span class="hrs-day">Terça – Quinta</span><span class="hrs-time">10:00 – 19:30</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sexta</span><span class="hrs-time">10:00 – 20:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sábado</span><span class="hrs-time">09:00 – 17:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Domingo</span><span class="hrs-closed">Encerrado</span></div>
+        </div>
+        <a href="tel:+351963855616" class="loc-tel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 963 855 616
+        </a>
+      </div>
+
+      <div class="loc-card r" data-d="2">
+        <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="loc-name">São Pedro da Cova</div>
+        <div class="loc-addr">R. de São Pedro<br>São Pedro da Cova, Gondomar</div>
+        <div class="loc-hrs">
+          <div class="loc-hrs-ttl">Horário</div>
+          <div class="hrs-row"><span class="hrs-day">Segunda</span><span class="hrs-closed">Encerrado</span></div>
+          <div class="hrs-row"><span class="hrs-day">Terça – Quinta</span><span class="hrs-time">10:00 – 19:30</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sexta</span><span class="hrs-time">10:00 – 20:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Sábado</span><span class="hrs-time">09:00 – 17:00</span></div>
+          <div class="hrs-row"><span class="hrs-day">Domingo</span><span class="hrs-closed">Encerrado</span></div>
+        </div>
+        <a href="tel:+351915830299" class="loc-tel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 915 830 299
+        </a>
+      </div>
+
+      <div class="loc-card r" data-d="3" style="grid-column: span 2">
+        <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="loc-name">Gandra</div>
+        <div class="loc-addr">Gandra, Gondomar &nbsp;<span style="font-size:11px;color:var(--gold)">— Contactar para morada completa</span></div>
+        <div class="loc-hrs">
+          <div class="loc-hrs-ttl">Horário</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 52px">
+            <div class="hrs-row"><span class="hrs-day">Segunda</span><span class="hrs-closed">Encerrado</span></div>
+            <div class="hrs-row"><span class="hrs-day">Sexta</span><span class="hrs-time">10:00 – 20:00</span></div>
+            <div class="hrs-row"><span class="hrs-day">Terça – Quinta</span><span class="hrs-time">10:00 – 19:30</span></div>
+            <div class="hrs-row"><span class="hrs-day">Sábado</span><span class="hrs-time">09:00 – 17:00</span></div>
+          </div>
+        </div>
+        <a href="tel:+351915830299" class="loc-tel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 915 830 299
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testi-hd r">
+      <div class="eyebrow">O Que Dizem de Nós</div>
+      <div class="rule"></div>
+      <h2 class="display">Avaliações <span class="accent">Google</span></h2>
+    </div>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+
+      <div class="testi-card">
+        <div class="testi-q">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Finalmente encontrei uma barbearia com tudo o que preciso. Equipa de profissionais bem formados, jovens, competentes e dedicados desde que o cliente entra até que sai.</p>
+        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-q">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Local certo para o homem que se preocupa com a imagem. Instalações e equipamentos de qualidade, com aspeto sóbrio em que toda a atmosfera nos remete para o relaxamento e bem estar. Muito mais que um simples corte de cabelo.</p>
+        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-q">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Profissionais excelentes, excelente atendimento e um espaço exímio com um toque de requinte. Recomendo para quem quer um serviço personalizado.</p>
+        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-q">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Se queres um corte moderno ou personalizado à tua escolha este é o local ideal... atendimento top e grandes profissionais.</p>
+        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-q">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Está tudo no nome — atendimento, serviço e espaço premium. Mais que uma barbearia. Uma experiência completa para o homem moderno.</p>
+        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="testi-nav">
+    <button onclick="scrollTesti(-1)" aria-label="Anterior">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button onclick="scrollTesti(1)" aria-label="Próximo">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Marca a Tua Visita</div>
+    <h2 class="cta-title">Reserva o Teu<br>Corte Premium</h2>
+    <a href="https://linktr.ee/menspremium" target="_blank" class="btn btn-dark" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Agendar Agora
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="Logo_crop.jpg" alt="Men's Premium">
+        <p class="foot-tag">Grupo de barbearias premium para o homem moderno. Cinco unidades em Gondomar, Porto — desde 2019.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/mens__premium/" target="_blank" class="soc-link" aria-label="Instagram" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/Menspremium2019/" target="_blank" class="soc-link" aria-label="Facebook" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://linktr.ee/menspremium" target="_blank" class="soc-link" aria-label="Linktree" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </a>
+          <a href="https://www.instagram.com/mens_premium_estetica/" target="_blank" class="soc-link" aria-label="Instagram Estética" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="foot-col-ttl">Navegação</div>
+        <ul class="foot-nav">
+          <li><a href="#services">Serviços</a></li>
+          <li><a href="#portfolio">Portfólio</a></li>
+          <li><a href="#about">Sobre Nós</a></li>
+          <li><a href="#locations">Unidades</a></li>
+          <li><a href="#testimonials">Avaliações</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-col-ttl">Unidades</div>
+        <ul class="foot-nav">
+          <li><a href="#locations">Fânzeres</a></li>
+          <li><a href="#locations">Rio Tinto</a></li>
+          <li><a href="#locations">Gondomar</a></li>
+          <li><a href="#locations">São Pedro da Cova</a></li>
+          <li><a href="#locations">Gandra</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-col-ttl">Contacto</div>
+        <div class="foot-contact-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 915 830 299
+        </div>
+        <div class="foot-contact-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          +351 22 017 7657
+        </div>
+        <div class="foot-contact-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Gondomar, Porto
+        </div>
+        <div class="foot-contact-row" style="margin-top:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://linktr.ee/menspremium" target="_blank" rel="noopener" style="color:rgba(255,255,255,.38);transition:color .2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">linktr.ee/menspremium</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2026 Men's Premium. Todos os direitos reservados.</span>
+      <div class="foot-rule"></div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/351915830299" target="_blank" class="wa-btn" aria-label="WhatsApp" rel="noopener">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // Navbar
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 48), { passive: true });
+
+  // Video hero — fade in + slow playback
+  const heroVid = document.getElementById('heroVid');
+  if (heroVid) {
+    heroVid.playbackRate = 0.6;
+    const showVid = () => heroVid.classList.add('ready');
+    heroVid.addEventListener('canplay', showVid, { once: true });
+    heroVid.addEventListener('loadeddata', showVid, { once: true });
+    if (heroVid.readyState >= 3) showVid();
+  }
+
+  // Reveal on scroll
+  const revEls = document.querySelectorAll('.r');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -52px 0px' });
+  revEls.forEach(el => revObs.observe(el));
+
+  // Animated counters
+  const ctrs = document.querySelectorAll('.ctr');
+  const ctrObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const target = +e.target.dataset.t;
+      const dur = 1800;
+      const step = target / (dur / 16);
+      let cur = 0;
+      const t = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        e.target.textContent = Math.floor(cur).toLocaleString('pt-PT');
+        if (cur >= target) clearInterval(t);
+      }, 16);
+      ctrObs.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  ctrs.forEach(el => ctrObs.observe(el));
+
+  // Testimonials nav
+  function scrollTesti(dir) {
+    document.getElementById('testiTrack').scrollBy({ left: dir * 422, behavior: 'smooth' });
+  }
+
+  // Mobile menu
+  function toggleMob() {
+    document.getElementById('mobMenu').classList.toggle('open');
+  }
+
+  // ── Circular Gallery ──────────────────────────────────
+  (function () {
+    const ITEMS = [
+      { url: 'Portefolio/468179416_18091377496497320_8848080340577860399_n.jpg',  tag: 'Corte',      label: 'Fade Clássico' },
+      { url: 'Portefolio/468298522_18091376611497320_3907045960752749009_n.jpg',  tag: 'Corte',      label: 'Estilo Moderno' },
+      { url: 'Portefolio/468396835_18091377928497320_775042051494392727_n.jpg',   tag: 'Barba',      label: 'Design de Barba' },
+      { url: 'Portefolio/469948079_2399717750376800_5848292607380810916_n.jpg',   tag: 'Corte',      label: 'Premium Cut' },
+      { url: 'Portefolio/472888644_2421573991524509_2018602638069048133_n.jpg',   tag: 'Fade',       label: 'Degradê Perfeito' },
+      { url: 'Portefolio/476746239_2447120252303216_7166921418675903248_n.jpg',   tag: 'Corte',      label: 'Estilo Urbano' },
+      { url: 'Portefolio/476776568_2447837245564850_4153336313284798645_n.jpg',   tag: 'Barba',      label: 'Barba Premium' },
+      { url: 'Portefolio/476776839_2447845448897363_2953052504203634889_n.jpg',   tag: 'Fade',       label: 'Taper Fade' },
+      { url: 'Portefolio/476815941_2447001058981802_7447804539492979421_n.jpg',   tag: 'Corte',      label: 'Clássico Atemporal' },
+      { url: 'Portefolio/476833139_2447374802277761_7202857740195475249_n.jpg',   tag: 'Acabamento', label: 'Acabamento Perfeito' },
+      { url: 'Portefolio/477214295_2447835815564993_2602870699200457584_n.jpg',   tag: 'Corte',      label: 'Personalizado' },
+      { url: 'Portefolio/477573864_2447660475582527_3958901857908080047_n.jpg',   tag: 'Corte',      label: 'Look Premium' },
+    ];
+
+    const scene = document.getElementById('circScene');
+    const wrap  = document.getElementById('circWrap');
+    if (!scene || !wrap) return;
+
+    const N          = ITEMS.length;
+    const STEP       = 360 / N;
+    const RADIUS     = 580;
+    const AUTO_SPEED = 0.012;
+
+    let rot      = 0;
+    let velocity = 0;
+    let dragging = false;
+    let dragX0   = 0;
+    let rot0     = 0;
+    let lastX    = 0;
+    let lastDx   = 0;
+
+    // Build cards using safe DOM methods (no innerHTML)
+    ITEMS.forEach(function(item, i) {
+      const card = document.createElement('div');
+      card.className = 'circ-card';
+      card.style.transform = 'rotateY(' + (i * STEP) + 'deg) translateZ(' + RADIUS + 'px)';
+
+      const img = document.createElement('img');
+      img.src = item.url;
+      img.alt = item.label;
+      img.loading = 'lazy';
+
+      const info = document.createElement('div');
+      info.className = 'circ-card-info';
+
+      const tagEl = document.createElement('div');
+      tagEl.className = 'circ-card-tag';
+      tagEl.textContent = item.tag;
+
+      const lblEl = document.createElement('div');
+      lblEl.className = 'circ-card-label';
+      lblEl.textContent = item.label;
+
+      info.appendChild(tagEl);
+      info.appendChild(lblEl);
+      card.appendChild(img);
+      card.appendChild(info);
+      scene.appendChild(card);
+    });
+
+    const cards = scene.querySelectorAll('.circ-card');
+
+    function render() {
+      scene.style.transform = 'rotateY(' + rot + 'deg)';
+      cards.forEach(function(card, i) {
+        const eff  = ((i * STEP + rot) % 360 + 360) % 360;
+        const norm = eff > 180 ? 360 - eff : eff;
+        card.style.opacity = Math.max(0.22, 1 - norm / 180).toFixed(3);
+      });
+    }
+
+    function loop() {
+      if (!dragging) {
+        if (Math.abs(velocity) > 0.05) {
+          rot      += velocity;
+          velocity *= 0.92;
+        } else {
+          velocity  = 0;
+          rot      -= AUTO_SPEED;
+        }
+      }
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    // Mouse drag
+    wrap.addEventListener('mousedown', function(e) {
+      dragging = true; dragX0 = e.clientX; rot0 = rot; lastX = e.clientX; velocity = 0;
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      lastDx = e.clientX - lastX; lastX = e.clientX;
+      rot = rot0 + (e.clientX - dragX0) * 0.3;
+    });
+    window.addEventListener('mouseup', function() {
+      if (!dragging) return;
+      dragging = false; velocity = lastDx * 0.3;
+    });
+
+    // Touch drag
+    wrap.addEventListener('touchstart', function(e) {
+      dragging = true; dragX0 = e.touches[0].clientX; rot0 = rot; lastX = dragX0; velocity = 0;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      lastDx = e.touches[0].clientX - lastX; lastX = e.touches[0].clientX;
+      rot = rot0 + (e.touches[0].clientX - dragX0) * 0.3;
+    }, { passive: true });
+    wrap.addEventListener('touchend', function() { dragging = false; velocity = lastDx * 0.3; });
+
+    loop();
+  })();
+</script>
+</body>
+</html>
