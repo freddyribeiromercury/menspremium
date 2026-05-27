@@ -100,21 +100,31 @@
     /* ─── NAVBAR ─────────────────────────────────────────── */
     #nav {
       position: fixed; inset: 0 0 auto; z-index: 900;
-      height: 72px; padding: 0 40px;
+      width: 100%; height: 72px; padding: 0 40px;
       display: flex; align-items: center; justify-content: space-between;
-      transition: background .35s, box-shadow .35s;
+      transition: background .42s var(--ease), box-shadow .42s var(--ease),
+                  top .42s var(--ease), left .42s var(--ease), width .42s var(--ease),
+                  border-radius .42s var(--ease), height .42s var(--ease), padding .42s var(--ease);
     }
     #nav.stuck {
-      background: rgba(8,8,8,.96);
-      box-shadow: 0 1px 0 rgba(200,146,42,.18);
-      backdrop-filter: blur(14px);
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 0 1px rgba(200,146,42,.22), 0 8px 32px rgba(0,0,0,.42);
+    }
+    @media (min-width: 769px) {
+      #nav.stuck {
+        top: 14px; left: calc(50% - 360px); right: auto;
+        width: 720px; border-radius: 50px; height: 54px; padding: 0 24px;
+      }
+      #nav.stuck .nav-logo { display: none; }
+      #nav.stuck .nav-links { gap: 22px; }
     }
     .nav-logo img { height: 28px; width: auto; display: block; mix-blend-mode: screen; }
     .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
     .nav-links a {
       font-size: 11.5px; font-weight: 600; letter-spacing: .16em;
       text-transform: uppercase; color: rgba(255,255,255,.68);
-      position: relative; transition: color .2s;
+      position: relative; transition: color .2s; white-space: nowrap;
     }
     .nav-links a::after {
       content: ''; position: absolute; left: 0; bottom: -4px;
@@ -252,7 +262,14 @@
     .stats-row { display: grid; grid-template-columns: repeat(4,1fr); }
     .stat {
       padding: 52px 44px; border-right: 1px solid var(--black-edge);
+      position: relative; overflow: hidden;
     }
+    .stat::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 0; height: 2px; background: var(--gold);
+      transition: width .9s var(--ease);
+    }
+    .stat.on::before { width: 100%; }
     .stat:last-child { border-right: none; }
     .stat-n {
       font-family: var(--ff-display); font-size: 68px; line-height: 1;
@@ -271,18 +288,27 @@
     .srv-grid {
       display: grid; grid-template-columns: repeat(3,1fr);
       gap: 2px; background: var(--black-edge);
+      --srv-x: -9999; --srv-y: -9999; --srv-size: 340;
     }
     .srv-card {
-      background: var(--black-card); padding: 50px 42px;
-      position: relative; overflow: hidden;
-      transition: background .28s;
+      background-color: var(--black-card);
+      background-image: radial-gradient(
+        calc(var(--srv-size, 340) * 1px) calc(var(--srv-size, 340) * 1px) at
+        calc(var(--srv-x, -9999) * 1px) calc(var(--srv-y, -9999) * 1px),
+        rgba(200,146,42,0.14), transparent 65%
+      );
+      background-attachment: fixed;
+      padding: 50px 42px; position: relative; overflow: hidden;
+      transition: background-color .28s, box-shadow .32s, transform .22s var(--ease);
+      transform-style: preserve-3d; will-change: transform;
+      box-shadow: inset 0 0 0 1px rgba(200,146,42,0.08);
     }
     .srv-card::after {
       content: ''; position: absolute;
       bottom: 0; left: 0; width: 0; height: 2px;
       background: var(--gold); transition: width .4s var(--ease);
     }
-    .srv-card:hover { background: #161616; }
+    .srv-card:hover { background-color: #161616; box-shadow: inset 0 0 0 1px rgba(200,146,42,0.28), 0 0 32px rgba(200,146,42,0.10); }
     .srv-card:hover::after { width: 100%; }
     .srv-num {
       position: absolute; top: 18px; right: 22px;
@@ -295,6 +321,14 @@
     .srv-icon svg { width: 100%; height: 100%; }
     .srv-name { font-family: var(--ff-display); font-size: 29px; letter-spacing: .04em; margin-bottom: 10px; }
     .srv-desc { font-size: 13px; line-height: 1.78; color: rgba(255,255,255,.52); }
+    .srv-cta {
+      position: absolute; bottom: -26px; left: 42px;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--gold);
+      transition: bottom .3s var(--ease);
+    }
+    .srv-card:hover .srv-cta { bottom: 28px; }
 
     /* ─── PORTFOLIO ──────────────────────────────────────── */
     #portfolio { padding: 128px 0; background: var(--black-soft); }
@@ -366,25 +400,64 @@
     .about-badge-n { font-family: var(--ff-display); font-size: 54px; color: var(--gold); line-height: 1; }
     .about-badge-l { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.48); margin-top: 4px; line-height: 1.5; }
 
+    /* ── About 3D Card ── */
+    .about-img-wrap { perspective: 1000px; }
+    .about-3d-card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .2s ease-linear;
+      will-change: transform;
+    }
+    .about-3d-card .about-badge { transition: transform .2s ease-linear; }
+
     /* Team */
     .team-hd { text-align: center; margin-bottom: 56px; }
     .team-hd .eyebrow { justify-content: center; }
     .team-hd .rule { margin: 16px auto; }
-    .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
-    .team-card { position: relative; overflow: hidden; cursor: pointer; }
+    /* ── Expanding Cards — Team ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 8px; height: 500px;
+      transition: grid-template-columns .5s ease-out;
+    }
+    .team-card {
+      position: relative; overflow: hidden; cursor: pointer;
+      border-radius: 8px; min-width: 60px;
+    }
     .team-card img {
-      width: 100%; aspect-ratio: 1; object-fit: cover;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
       transition: transform .5s var(--ease), filter .5s;
-      filter: grayscale(15%);
+      transform: scale(1.08); filter: grayscale(100%);
     }
-    .team-card:hover img { transform: scale(1.05); filter: grayscale(0%); }
-    .team-info {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 22px;
-      background: linear-gradient(to top, rgba(8,8,8,.95) 0%, transparent 100%);
+    .team-card[data-active="true"] img { transform: scale(1); filter: grayscale(0%); }
+    .team-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,.9) 0%, rgba(8,8,8,.15) 55%, transparent 100%);
     }
-    .team-role { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
-    .team-name { font-family: var(--ff-display); font-size: 23px; letter-spacing: .04em; line-height: 1.1; }
-    .team-unit { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 3px; letter-spacing: .04em; }
+    .tc-body {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 22px; gap: 5px;
+    }
+    .tc-rotated {
+      position: absolute; bottom: 50%; left: 50%;
+      transform: translateX(-50%) translateY(50%) rotate(90deg);
+      white-space: nowrap; font-size: 10.5px; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+      opacity: 1; transition: opacity .25s;
+    }
+    .team-card[data-active="true"] .tc-rotated { opacity: 0; pointer-events: none; }
+    .tc-icon { color: var(--gold); opacity: 0; transition: opacity .3s .05s; margin-bottom: 2px; }
+    .tc-role { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); opacity: 0; transition: opacity .3s .1s; }
+    .tc-name { font-family: var(--ff-display); font-size: 30px; letter-spacing: .04em; line-height: 1; color: var(--white); opacity: 0; transition: opacity .3s .15s; }
+    .tc-unit { font-size: 11.5px; color: rgba(255,255,255,.48); opacity: 0; transition: opacity .3s .2s; }
+    .team-card[data-active="true"] .tc-icon,
+    .team-card[data-active="true"] .tc-role,
+    .team-card[data-active="true"] .tc-name,
+    .team-card[data-active="true"] .tc-unit { opacity: 1; }
 
     /* ─── LOCATIONS ──────────────────────────────────────── */
     #locations { padding: 128px 0; background: var(--black-soft); }
@@ -422,30 +495,58 @@
 
     /* ─── TESTIMONIALS ───────────────────────────────────── */
     #testimonials { padding: 128px 0; background: var(--black); overflow: hidden; }
-    .testi-hd { text-align: center; margin-bottom: 66px; }
+    .testi-hd { text-align: center; margin-bottom: 80px; }
     .testi-hd .eyebrow { justify-content: center; }
     .testi-hd .rule { margin: 16px auto; }
-    .testi-track-wrap { position: relative; }
-    .testi-track {
-      display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none;
-      padding: 0 40px 16px; -ms-overflow-style: none;
+    .testi-editorial { display: flex; align-items: flex-start; }
+    .testi-ed-idx {
+      font-family: var(--ff-display);
+      font-size: clamp(100px,13vw,172px); line-height: 1;
+      color: rgba(200,146,42,.08); user-select: none;
+      flex-shrink: 0; min-width: 180px;
     }
-    .testi-track::-webkit-scrollbar { display: none; }
-    .testi-card {
-      flex-shrink: 0; width: 400px;
-      background: var(--black-card); border: 1px solid var(--black-edge); padding: 44px 36px;
+    .testi-ed-body { flex: 1; padding-top: 18px; }
+    .testi-ed-stars { color: var(--gold); font-size: 15px; letter-spacing: 3px; margin-bottom: 24px; }
+    .testi-ed-quote {
+      font-family: var(--ff-display);
+      font-size: clamp(26px,3.4vw,44px); line-height: 1.15;
+      letter-spacing: .01em; color: var(--white); margin-bottom: 28px;
+      transition: opacity .3s var(--ease), transform .3s var(--ease);
     }
-    .testi-q { font-size: 58px; line-height: .65; font-family: Georgia, serif; color: var(--gold); opacity: .38; margin-bottom: 18px; }
-    .testi-stars { display: flex; gap: 3px; color: var(--gold); font-size: 14px; margin-bottom: 16px; }
-    .testi-text { font-size: 13.5px; line-height: 1.88; color: rgba(255,255,255,.66); margin-bottom: 28px; }
-    .testi-author { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.32); }
-    .testi-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 36px; }
-    .testi-nav button {
+    .testi-ed-quote.fade { opacity: 0; transform: translateX(16px); }
+    .testi-ed-author {
+      font-size: 11px; font-weight: 700; letter-spacing: .22em;
+      text-transform: uppercase; color: rgba(255,255,255,.35);
+      transition: opacity .3s var(--ease) .06s;
+    }
+    .testi-ed-author.fade { opacity: 0; }
+    .testi-ed-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--black-edge);
+    }
+    .testi-ed-lines { display: flex; align-items: center; gap: 8px; }
+    .testi-ed-line-btn { padding: 10px 0; cursor: pointer; background: none; border: none; }
+    .testi-ed-line-btn span {
+      display: block; height: 1px; background: rgba(255,255,255,.16);
+      transition: width .4s var(--ease), background .4s; width: 28px;
+    }
+    .testi-ed-line-btn.active span { width: 54px; background: var(--gold); }
+    .testi-ed-count {
+      font-size: 11px; font-weight: 600; letter-spacing: .26em;
+      text-transform: uppercase; color: rgba(255,255,255,.28);
+    }
+    .testi-ed-arrows { display: flex; gap: 8px; }
+    .testi-ed-arrows button {
       width: 44px; height: 44px; border: 1px solid var(--black-edge);
       display: flex; align-items: center; justify-content: center;
       color: var(--white); transition: all .2s;
     }
-    .testi-nav button:hover { border-color: var(--gold); color: var(--gold); }
+    .testi-ed-arrows button:hover { border-color: var(--gold); color: var(--gold); }
+    @media (max-width: 768px) {
+      .testi-editorial { flex-direction: column; gap: 8px; }
+      .testi-ed-idx { font-size: 80px; min-width: auto; }
+      .testi-ed-nav { flex-wrap: wrap; gap: 16px; }
+    }
 
     /* ─── CTA BAND ───────────────────────────────────────── */
     #cta {
@@ -467,7 +568,11 @@
     }
 
     /* ─── FOOTER ─────────────────────────────────────────── */
-    #footer { background: #040404; padding: 76px 0 36px; border-top: 1px solid var(--black-edge); }
+    #footer { background: #040404; padding: 76px 0 36px; position: relative; }
+    #footer::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-line) 30%, var(--gold) 50%, var(--gold-line) 70%, transparent);
+    }
     .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 56px; margin-bottom: 56px; }
     .foot-logo img { height: 46px; width: auto; margin-bottom: 18px; }
     .foot-tag { font-size: 13px; line-height: 1.82; color: rgba(255,255,255,.36); margin-bottom: 26px; }
@@ -496,6 +601,15 @@
       box-shadow: 0 4px 22px rgba(37,211,102,.42);
       transition: transform .22s var(--ease), box-shadow .22s;
     }
+    .wa-btn::before {
+      content: ''; position: absolute; inset: -8px; border-radius: 50%;
+      background: rgba(37,211,102,.22);
+      animation: waPulse 2.4s ease-out infinite;
+    }
+    @keyframes waPulse {
+      0% { transform: scale(.9); opacity: .75; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
     .wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,.52); }
 
     /* ─── RESPONSIVE ─────────────────────────────────────── */
@@ -506,7 +620,6 @@
       .about-grid { grid-template-columns: 1fr; gap: 60px; }
       .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .loc-grid { grid-template-columns: repeat(2,1fr); }
-      .team-grid { grid-template-columns: repeat(2,1fr); }
       .circ-wrap { height: 480px; }
     }
     .loc-wide { grid-column: span 2; }
@@ -530,6 +643,12 @@
       .srv-card { padding: 32px 24px; }
       .port-head { flex-direction: column; align-items: flex-start; gap: 20px; }
       .about-feats { grid-template-columns: 1fr; }
+      .about-img-wrap { perspective: none; }
+      .team-grid { grid-template-columns: 1fr 1fr !important; height: auto; gap: 4px; }
+      .team-card { aspect-ratio: 3/4; border-radius: 6px; }
+      .team-card img { transform: scale(1) !important; filter: grayscale(0%) !important; }
+      .tc-rotated { display: none; }
+      .tc-icon, .tc-role, .tc-name, .tc-unit { opacity: 1 !important; }
       .testi-card { min-width: 320px; }
       .loc-grid { grid-template-columns: 1fr; }
       .loc-wide { grid-column: span 1; }
@@ -539,7 +658,7 @@
     @media (max-width: 480px) {
       .circ-wrap { height: 400px; }
       .circ-card { width: 220px; height: 290px; margin-left: -110px; margin-top: -145px; }
-      .team-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr !important; }
       .stats-row { grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -781,10 +900,12 @@
         </div>
       </div>
       <div class="about-img-wrap r" data-d="2">
-        <img src="Servico/475757929_2440927816255793_273036272784540074_n.jpg" alt="Ferramentas Men's Premium" class="about-img">
-        <div class="about-badge">
-          <div class="about-badge-n">5</div>
-          <div class="about-badge-l">Unidades<br>Gondomar</div>
+        <div class="about-3d-card">
+          <img src="Servico/475757929_2440927816255793_273036272784540074_n.jpg" alt="Ferramentas Men's Premium" class="about-img">
+          <div class="about-badge">
+            <div class="about-badge-n">5</div>
+            <div class="about-badge-l">Unidades<br>Gondomar</div>
+          </div>
         </div>
       </div>
     </div>
@@ -797,37 +918,45 @@
         <h2 class="display">Os Nossos <span class="accent">Especialistas</span></h2>
       </div>
       <div class="team-grid">
-        <div class="team-card">
+        <div class="team-card" tabindex="0">
           <img src="Quem%20somos/494528421_1239805738140132_8064944019577348083_n.jpg" alt="João Santos">
-          <div class="team-info">
-            <div class="team-role">Subgerente</div>
-            <div class="team-name">João Santos</div>
-            <div class="team-unit">Barbearia Fânzeres</div>
-          </div>
+          <article class="tc-body">
+            <span class="tc-rotated">João Santos</span>
+            <div class="tc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tc-role">Subgerente</div>
+            <div class="tc-name">João Santos</div>
+            <div class="tc-unit">Barbearia Fânzeres</div>
+          </article>
         </div>
-        <div class="team-card">
+        <div class="team-card" tabindex="0">
           <img src="Quem%20somos/493275150_1240269948093711_3952709594403707158_n.jpg" alt="João Sousa">
-          <div class="team-info">
-            <div class="team-role">Subgerente</div>
-            <div class="team-name">João Sousa</div>
-            <div class="team-unit">São Pedro da Cova</div>
-          </div>
+          <article class="tc-body">
+            <span class="tc-rotated">João Sousa</span>
+            <div class="tc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tc-role">Subgerente</div>
+            <div class="tc-name">João Sousa</div>
+            <div class="tc-unit">São Pedro da Cova</div>
+          </article>
         </div>
-        <div class="team-card">
+        <div class="team-card" tabindex="0">
           <img src="Quem%20somos/494263641_1239816331472406_6279932254333783345_n.jpg" alt="Tiago Simão">
-          <div class="team-info">
-            <div class="team-role">Subgerente</div>
-            <div class="team-name">Tiago Simão</div>
-            <div class="team-unit">Barbearia Rio Tinto</div>
-          </div>
+          <article class="tc-body">
+            <span class="tc-rotated">Tiago Simão</span>
+            <div class="tc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tc-role">Subgerente</div>
+            <div class="tc-name">Tiago Simão</div>
+            <div class="tc-unit">Barbearia Rio Tinto</div>
+          </article>
         </div>
-        <div class="team-card">
+        <div class="team-card" tabindex="0">
           <img src="Quem%20somos/494420396_1240434434743929_2177408074514754968_n.jpg" alt="Filipe Rodrigues">
-          <div class="team-info">
-            <div class="team-role">Subgerente</div>
-            <div class="team-name">Filipe Rodrigues</div>
-            <div class="team-unit">Barbearia Gandra</div>
-          </div>
+          <article class="tc-body">
+            <span class="tc-rotated">Filipe Rodrigues</span>
+            <div class="tc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tc-role">Subgerente</div>
+            <div class="tc-name">Filipe Rodrigues</div>
+            <div class="tc-unit">Barbearia Gandra</div>
+          </article>
         </div>
       </div>
     </div>
@@ -949,53 +1078,33 @@
       <h2 class="display">Avaliações <span class="accent">Google</span></h2>
     </div>
   </div>
-  <div class="testi-track-wrap">
-    <div class="testi-track" id="testiTrack">
-
-      <div class="testi-card">
-        <div class="testi-q">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">Finalmente encontrei uma barbearia com tudo o que preciso. Equipa de profissionais bem formados, jovens, competentes e dedicados desde que o cliente entra até que sai.</p>
-        <div class="testi-author">Cliente Verificado · Google Reviews</div>
+  <div class="container">
+    <div class="testi-editorial r">
+      <div class="testi-ed-idx" id="testiIdx">01</div>
+      <div class="testi-ed-body">
+        <div class="testi-ed-stars">★★★★★</div>
+        <blockquote class="testi-ed-quote" id="testiQuote">Finalmente encontrei uma barbearia com tudo o que preciso. Equipa de profissionais bem formados, jovens, competentes e dedicados desde que o cliente entra até que sai.</blockquote>
+        <div class="testi-ed-author" id="testiAuthor">Cliente Verificado · Google Reviews</div>
       </div>
-
-      <div class="testi-card">
-        <div class="testi-q">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">Local certo para o homem que se preocupa com a imagem. Instalações e equipamentos de qualidade, com aspeto sóbrio em que toda a atmosfera nos remete para o relaxamento e bem estar. Muito mais que um simples corte de cabelo.</p>
-        <div class="testi-author">Cliente Verificado · Google Reviews</div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-q">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">Profissionais excelentes, excelente atendimento e um espaço exímio com um toque de requinte. Recomendo para quem quer um serviço personalizado.</p>
-        <div class="testi-author">Cliente Verificado · Google Reviews</div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-q">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">Se queres um corte moderno ou personalizado à tua escolha este é o local ideal... atendimento top e grandes profissionais.</p>
-        <div class="testi-author">Cliente Verificado · Google Reviews</div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-q">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">Está tudo no nome — atendimento, serviço e espaço premium. Mais que uma barbearia. Uma experiência completa para o homem moderno.</p>
-        <div class="testi-author">Cliente Verificado · Google Reviews</div>
-      </div>
-
     </div>
-  </div>
-  <div class="testi-nav">
-    <button onclick="scrollTesti(-1)" aria-label="Anterior">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button onclick="scrollTesti(1)" aria-label="Próximo">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <div class="testi-ed-nav r" data-d="1">
+      <div class="testi-ed-lines">
+        <button class="testi-ed-line-btn active" onclick="jumpTestimonial(0)"><span></span></button>
+        <button class="testi-ed-line-btn" onclick="jumpTestimonial(1)"><span></span></button>
+        <button class="testi-ed-line-btn" onclick="jumpTestimonial(2)"><span></span></button>
+        <button class="testi-ed-line-btn" onclick="jumpTestimonial(3)"><span></span></button>
+        <button class="testi-ed-line-btn" onclick="jumpTestimonial(4)"><span></span></button>
+      </div>
+      <span class="testi-ed-count" id="testiCount">01 / 05</span>
+      <div class="testi-ed-arrows">
+        <button onclick="changeTestimonial(-1)" aria-label="Anterior">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button onclick="changeTestimonial(1)" aria-label="Próximo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1129,9 +1238,43 @@
   }, { threshold: 0.5 });
   ctrs.forEach(el => ctrObs.observe(el));
 
-  // Testimonials nav
-  function scrollTesti(dir) {
-    document.getElementById('testiTrack').scrollBy({ left: dir * 422, behavior: 'smooth' });
+  // Testimonials editorial
+  const TESTIS = [
+    { quote: 'Finalmente encontrei uma barbearia com tudo o que preciso. Equipa de profissionais bem formados, jovens, competentes e dedicados desde que o cliente entra até que sai.', author: 'Cliente Verificado · Google Reviews' },
+    { quote: 'Local certo para o homem que se preocupa com a imagem. Instalações e equipamentos de qualidade, com aspeto sóbrio em que toda a atmosfera nos remete para o relaxamento e bem estar. Muito mais que um simples corte de cabelo.', author: 'Cliente Verificado · Google Reviews' },
+    { quote: 'Profissionais excelentes, excelente atendimento e um espaço exímio com um toque de requinte. Recomendo para quem quer um serviço personalizado.', author: 'Cliente Verificado · Google Reviews' },
+    { quote: 'Se queres um corte moderno ou personalizado à tua escolha este é o local ideal... atendimento top e grandes profissionais.', author: 'Cliente Verificado · Google Reviews' },
+    { quote: 'Está tudo no nome — atendimento, serviço e espaço premium. Mais que uma barbearia. Uma experiência completa para o homem moderno.', author: 'Cliente Verificado · Google Reviews' },
+  ];
+  let testiCurrent = 0, testiAnimating = false;
+  let testiTimer = setInterval(() => changeTestimonial(1), 7000);
+
+  function jumpTestimonial(i) {
+    if (i === testiCurrent || testiAnimating) return;
+    testiAnimating = true;
+    clearInterval(testiTimer);
+    testiTimer = setInterval(() => changeTestimonial(1), 7000);
+    const q = document.getElementById('testiQuote');
+    const a = document.getElementById('testiAuthor');
+    const idx = document.getElementById('testiIdx');
+    const count = document.getElementById('testiCount');
+    const lines = document.querySelectorAll('.testi-ed-line-btn');
+    q.classList.add('fade'); a.classList.add('fade');
+    setTimeout(() => {
+      testiCurrent = i;
+      q.textContent = TESTIS[i].quote;
+      a.textContent = TESTIS[i].author;
+      const n = String(i + 1).padStart(2, '0');
+      idx.textContent = n;
+      count.textContent = n + ' / 05';
+      lines.forEach((l, j) => l.classList.toggle('active', j === i));
+      q.classList.remove('fade'); a.classList.remove('fade');
+      setTimeout(() => { testiAnimating = false; }, 320);
+    }, 300);
+  }
+
+  function changeTestimonial(dir) {
+    jumpTestimonial((testiCurrent + dir + TESTIS.length) % TESTIS.length);
   }
 
   // Mobile menu
@@ -1163,9 +1306,9 @@
     const N          = ITEMS.length;
     const STEP       = 360 / N;
     const RADIUS     = window.innerWidth <= 768 ? 270 : 580;
-    const AUTO_SPEED = 0.012;
+    const AUTO_SPEED = 0.016;
 
-    let rot      = 0;
+    let rot      = -240;
     let velocity = 0;
     let dragging = false;
     let dragX0   = 0;
@@ -1254,6 +1397,109 @@
 
     loop();
   })();
+
+  // Service cards — GlowCard spotlight (viewport-fixed) + 3D tilt + CTA
+  (function() {
+    var grid = document.querySelector('.srv-grid');
+
+    // Global pointermove updates CSS vars on grid → inherited by all cards (background-attachment: fixed)
+    document.addEventListener('pointermove', function(e) {
+      if (!grid) return;
+      grid.style.setProperty('--srv-x', e.clientX.toFixed(2));
+      grid.style.setProperty('--srv-y', e.clientY.toFixed(2));
+    });
+
+    document.querySelectorAll('.srv-card').forEach(function(card) {
+      // CTA element
+      var cta = document.createElement('div');
+      cta.className = 'srv-cta';
+      var txt = document.createTextNode('Descobrir ');
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', '11'); svg.setAttribute('height', '11');
+      svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2.5');
+      var ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      ln.setAttribute('x1', '5'); ln.setAttribute('y1', '12');
+      ln.setAttribute('x2', '19'); ln.setAttribute('y2', '12');
+      var poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      poly.setAttribute('points', '12 5 19 12 12 19');
+      svg.appendChild(ln); svg.appendChild(poly);
+      cta.appendChild(txt); cta.appendChild(svg);
+      card.appendChild(cta);
+
+      // 3D tilt — per-card local tracking
+      card.addEventListener('mousemove', function(e) {
+        var r = card.getBoundingClientRect();
+        var nx = ((e.clientX - r.left) / r.width) - 0.5;
+        var ny = ((e.clientY - r.top) / r.height) - 0.5;
+        card.style.transform = 'perspective(900px) rotateX(' + (ny * -6) + 'deg) rotateY(' + (nx * 6) + 'deg) translateZ(6px)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      });
+    });
+  }());
+
+  // ── Expanding Cards — Team ───────────────────────────────
+  (function () {
+    var grid = document.querySelector('.team-grid');
+    if (!grid) return;
+    var cards = Array.from(grid.querySelectorAll('.team-card'));
+
+    function activate(idx) {
+      if (window.innerWidth <= 768) return;
+      cards.forEach(function(c, i) {
+        c.dataset.active = i === idx ? 'true' : 'false';
+      });
+      grid.style.gridTemplateColumns = cards.map(function(_, i) {
+        return i === idx ? '5fr' : '1fr';
+      }).join(' ');
+    }
+
+    activate(0);
+
+    cards.forEach(function(card, i) {
+      card.addEventListener('mouseenter', function() { activate(i); });
+      card.addEventListener('focus',      function() { activate(i); });
+      card.addEventListener('click',      function() { activate(i); });
+    });
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth <= 768) {
+        cards.forEach(function(c) { c.removeAttribute('data-active'); });
+        grid.style.gridTemplateColumns = '';
+      } else {
+        activate(0);
+      }
+    });
+  }());
+
+  // ── About 3D Card Effect ─────────────────────────────────
+  (function () {
+    var card3d = document.querySelector('.about-3d-card');
+    if (!card3d) return;
+    var badge = card3d.querySelector('.about-badge');
+    var entered = false;
+
+    card3d.addEventListener('mouseenter', function () {
+      entered = true;
+      if (badge) badge.style.transform = 'translateZ(50px)';
+    });
+
+    card3d.addEventListener('mousemove', function (e) {
+      if (!entered) return;
+      var r = card3d.getBoundingClientRect();
+      var x = (e.clientX - r.left - r.width  / 2) / 25;
+      var y = (e.clientY - r.top  - r.height / 2) / 25;
+      card3d.style.transform = 'rotateY(' + x + 'deg) rotateX(' + (-y) + 'deg)';
+    });
+
+    card3d.addEventListener('mouseleave', function () {
+      entered = false;
+      card3d.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      if (badge) badge.style.transform = 'translateZ(0px)';
+    });
+  }());
 </script>
 </body>
 </html>
