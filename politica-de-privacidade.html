@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Política de Privacidade — Men's Premium Barbearia. Saiba como tratamos os seus dados pessoais.">
+  <meta name="robots" content="noindex, follow">
+  <title>Política de Privacidade — Men's Premium</title>
+
+  <link rel="icon" type="image/x-icon"       href="favicon.ico">
+  <link rel="icon" type="image/svg+xml"       href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180"    href="apple-touch-icon.png">
+  <link rel="manifest"                            href="site.webmanifest">
+  <meta name="theme-color" content="#C8922A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black:      #080808;
+      --black-soft: #0f0f0f;
+      --black-card: #131313;
+      --black-edge: #1c1c1c;
+      --gold:       #C8922A;
+      --gold-line:  rgba(200,146,42,.3);
+      --white:      #FFFFFF;
+      --grey:       #888888;
+      --ff-display: 'Bebas Neue', sans-serif;
+      --ff-body:    'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--ff-body); line-height: 1.7; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,.97); border-bottom: 1px solid var(--black-edge);
+      backdrop-filter: blur(12px);
+      height: 68px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 28px; width: auto; mix-blend-mode: screen; }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.55);
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--gold); text-decoration: none; }
+
+    /* ── HERO ── */
+    .pp-hero {
+      background: var(--black-soft); border-bottom: 1px solid var(--black-edge);
+      padding: 80px 40px 64px;
+    }
+    .pp-hero-inner { max-width: 800px; margin: 0 auto; }
+    .pp-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .38em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+    }
+    .pp-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .pp-title {
+      font-family: var(--ff-display);
+      font-size: clamp(44px, 7vw, 72px);
+      line-height: .92; letter-spacing: .02em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .pp-subtitle { font-size: 13.5px; color: rgba(255,255,255,.45); letter-spacing: .04em; }
+    .rule { width: 48px; height: 2px; background: var(--gold); margin: 18px 0; }
+
+    /* ── CONTENT ── */
+    .pp-body { max-width: 800px; margin: 0 auto; padding: 72px 40px 100px; }
+
+    .pp-section { margin-bottom: 52px; }
+    .pp-section-title {
+      font-family: var(--ff-display);
+      font-size: 26px; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--black-edge);
+    }
+    .pp-section p { font-size: 14px; line-height: 1.88; color: rgba(255,255,255,.65); margin-bottom: 14px; }
+    .pp-section ul {
+      list-style: none; margin: 12px 0 14px 0;
+    }
+    .pp-section ul li {
+      font-size: 14px; line-height: 1.88; color: rgba(255,255,255,.65);
+      padding: 6px 0 6px 20px; position: relative;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .pp-section ul li::before {
+      content: ''; position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%); width: 5px; height: 5px;
+      background: var(--gold); border-radius: 50%;
+    }
+    .pp-section strong { color: var(--white); font-weight: 600; }
+    .pp-section a { color: var(--gold); }
+
+    .pp-box {
+      background: var(--black-card); border: 1px solid var(--black-edge);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px; margin: 18px 0;
+      font-size: 13.5px; line-height: 1.8; color: rgba(255,255,255,.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #040404; border-top: 1px solid var(--black-edge);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .foot-copy { font-size: 11.5px; color: rgba(255,255,255,.22); letter-spacing: .06em; }
+    .foot-links { display: flex; gap: 24px; }
+    .foot-links a { font-size: 12px; color: rgba(255,255,255,.35); transition: color .2s; }
+    .foot-links a:hover { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      nav, .pp-hero, footer { padding-left: 20px; padding-right: 20px; }
+      .pp-body { padding: 48px 20px 72px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><img src="Logo_crop.jpg" alt="Men's Premium"></a>
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar ao site
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="pp-hero">
+  <div class="pp-hero-inner">
+    <div class="pp-eyebrow">Informação Legal</div>
+    <h1 class="pp-title">Política de<br>Privacidade</h1>
+    <div class="rule"></div>
+    <p class="pp-subtitle">Última atualização: 27 de maio de 2026</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="pp-body">
+
+  <div class="pp-section">
+    <div class="pp-section-title">1. Identificação do Responsável</div>
+    <p>O responsável pelo tratamento dos seus dados pessoais é a <strong>Men's Premium — Barbearia e Imagem Pessoal</strong>, com estabelecimentos no concelho de Gondomar, Porto, Portugal.</p>
+    <div class="pp-box">
+      <strong>Contacto para questões de privacidade:</strong><br>
+      Telefone: <a href="tel:+351915830299">+351 915 830 299</a><br>
+      Instagram: <a href="https://www.instagram.com/mens__premium/" target="_blank" rel="noopener">@mens__premium</a>
+    </div>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">2. Dados Recolhidos</div>
+    <p>Este website pode recolher os seguintes tipos de dados pessoais:</p>
+    <ul>
+      <li><strong>Dados de contacto</strong> — nome, número de telefone, fornecidos voluntariamente em formulários de contacto ou agendamento</li>
+      <li><strong>Dados de navegação</strong> — endereço IP, tipo de browser, páginas visitadas, tempo de permanência (através de cookies técnicos)</li>
+      <li><strong>Dados de comunicação</strong> — mensagens enviadas via WhatsApp ou redes sociais</li>
+    </ul>
+    <p>Não recolhemos dados sensíveis (saúde, origem étnica, crenças religiosas, etc.) através deste website.</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">3. Finalidade e Base Legal</div>
+    <p>Os seus dados são tratados para as seguintes finalidades:</p>
+    <ul>
+      <li><strong>Gestão de agendamentos</strong> — necessária para a execução do serviço solicitado (Art.º 6.º n.º 1 b) RGPD)</li>
+      <li><strong>Resposta a contactos</strong> — interesse legítimo em responder às suas questões (Art.º 6.º n.º 1 f) RGPD)</li>
+      <li><strong>Melhoria do website</strong> — interesse legítimo na análise de desempenho técnico (Art.º 6.º n.º 1 f) RGPD)</li>
+      <li><strong>Marketing direto</strong> — apenas com o seu consentimento explícito (Art.º 6.º n.º 1 a) RGPD)</li>
+    </ul>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">4. Partilha de Dados</div>
+    <p>Não vendemos nem cedemos os seus dados pessoais a terceiros para fins comerciais. Os dados podem ser partilhados com:</p>
+    <ul>
+      <li><strong>Prestadores de serviços de agendamento</strong> (ex: Booksy, Treatwell) — para gestão de marcações</li>
+      <li><strong>Meta Platforms (Instagram/Facebook)</strong> — quando interage com as nossas páginas sociais</li>
+      <li><strong>Autoridades competentes</strong> — quando legalmente exigido</li>
+    </ul>
+    <p>Todos os subcontratantes estão sujeitos a obrigações contratuais de confidencialidade e proteção de dados em conformidade com o RGPD.</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">5. Cookies</div>
+    <p>Este website utiliza cookies técnicos essenciais para o seu funcionamento correto. Não utilizamos cookies de rastreamento de terceiros sem o seu consentimento.</p>
+    <ul>
+      <li><strong>Cookies técnicos</strong> — necessários para navegação e funcionalidades básicas</li>
+      <li><strong>Cookies de análise</strong> — apenas com o seu consentimento, para melhorar a experiência do utilizador</li>
+    </ul>
+    <p>Pode configurar o seu browser para recusar cookies, mas algumas funcionalidades do website poderão ficar limitadas.</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">6. Conservação dos Dados</div>
+    <p>Os seus dados são conservados apenas pelo tempo necessário à finalidade para que foram recolhidos:</p>
+    <ul>
+      <li>Dados de agendamento — 2 anos após o último serviço prestado</li>
+      <li>Dados de contacto — 1 ano após o último contacto</li>
+      <li>Dados de navegação — 13 meses (cookies analíticos)</li>
+      <li>Obrigações legais e fiscais — conforme legislação aplicável (até 10 anos)</li>
+    </ul>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">7. Os Seus Direitos</div>
+    <p>Ao abrigo do Regulamento Geral de Proteção de Dados (RGPD — Regulamento UE 2016/679), tem os seguintes direitos:</p>
+    <ul>
+      <li><strong>Direito de acesso</strong> — obter confirmação e cópia dos seus dados pessoais</li>
+      <li><strong>Direito de retificação</strong> — corrigir dados inexatos ou incompletos</li>
+      <li><strong>Direito ao apagamento</strong> — solicitar a eliminação dos seus dados ("direito a ser esquecido")</li>
+      <li><strong>Direito à limitação</strong> — restringir o tratamento em determinadas circunstâncias</li>
+      <li><strong>Direito de portabilidade</strong> — receber os seus dados em formato estruturado</li>
+      <li><strong>Direito de oposição</strong> — opor-se ao tratamento baseado em interesse legítimo</li>
+      <li><strong>Direito a não ser sujeito a decisões automatizadas</strong> — incluindo definição de perfis</li>
+    </ul>
+    <p>Para exercer qualquer um destes direitos, contacte-nos através do número <a href="tel:+351915830299">+351 915 830 299</a>. Responderemos no prazo máximo de 30 dias.</p>
+    <p>Tem ainda o direito de apresentar reclamação à autoridade de controlo nacional: <strong>CNPD — Comissão Nacional de Proteção de Dados</strong> (<a href="https://www.cnpd.pt" target="_blank" rel="noopener">www.cnpd.pt</a>).</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">8. Segurança</div>
+    <p>Adotamos medidas técnicas e organizacionais adequadas para proteger os seus dados pessoais contra acesso não autorizado, alteração, divulgação ou destruição. O acesso aos dados é restrito ao pessoal estritamente necessário.</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">9. Links Externos</div>
+    <p>Este website contém ligações para plataformas externas (Instagram, Facebook, Linktree, Google Maps, WhatsApp). A Men's Premium não é responsável pelas práticas de privacidade dessas plataformas. Recomendamos que consulte as respetivas políticas de privacidade.</p>
+  </div>
+
+  <div class="pp-section">
+    <div class="pp-section-title">10. Alterações a Esta Política</div>
+    <p>Reservamo-nos o direito de atualizar esta Política de Privacidade periodicamente, para refletir alterações legais ou operacionais. A data da última atualização é sempre indicada no topo desta página. Recomendamos que a consulte regularmente.</p>
+    <div class="pp-box">
+      Esta política está em conformidade com o <strong>Regulamento (UE) 2016/679</strong> (RGPD) e com a legislação portuguesa de proteção de dados.
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-copy">© 2026 Men's Premium. Todos os direitos reservados.</span>
+  <div class="foot-links">
+    <a href="index.html">Voltar ao Site</a>
+    <a href="politica-de-privacidade.html" aria-current="page">Política de Privacidade</a>
+  </div>
+</footer>
+
+</body>
+</html>
