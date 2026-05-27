@@ -509,15 +509,30 @@
       .team-grid { grid-template-columns: repeat(2,1fr); }
       .circ-wrap { height: 480px; }
     }
+    .loc-wide { grid-column: span 2; }
+
     @media (max-width: 768px) {
       .container { padding: 0 22px; }
-      #nav { padding: 0 22px; }
+      #nav { padding: 0 22px; background: rgba(8,8,8,.97); }
       .nav-links { display: none; }
       .ham { display: flex; }
       .hero-badge { display: none; }
       .hero-inner { padding: 110px 22px 80px; }
+      .hero-sub { letter-spacing: .12em; }
+      .hero-btns { flex-direction: column; align-items: stretch; gap: 12px; }
+      .hero-btns .btn { width: 100%; justify-content: center; }
       .display { font-size: clamp(44px,10vw,72px); }
+      #services { padding: 72px 0; }
+      #portfolio { padding: 72px 0; }
+      #about { padding: 72px 0; }
+      #locations { padding: 72px 0; }
+      #testimonials { padding: 72px 0; }
+      .srv-card { padding: 32px 24px; }
+      .port-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .about-feats { grid-template-columns: 1fr; }
+      .testi-card { min-width: 320px; }
       .loc-grid { grid-template-columns: 1fr; }
+      .loc-wide { grid-column: span 1; }
       .foot-grid { grid-template-columns: 1fr; }
       .srv-grid { grid-template-columns: 1fr; }
     }
@@ -902,7 +917,7 @@
         </a>
       </div>
 
-      <div class="loc-card r" data-d="3" style="grid-column: span 2">
+      <div class="loc-card loc-wide r" data-d="3">
         <div class="loc-pin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div class="loc-name">Gandra</div>
         <div class="loc-addr">Gandra, Gondomar &nbsp;<span style="font-size:11px;color:var(--gold)">— Contactar para morada completa</span></div>
@@ -1147,7 +1162,7 @@
 
     const N          = ITEMS.length;
     const STEP       = 360 / N;
-    const RADIUS     = 580;
+    const RADIUS     = window.innerWidth <= 768 ? 270 : 580;
     const AUTO_SPEED = 0.012;
 
     let rot      = 0;
